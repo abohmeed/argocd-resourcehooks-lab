@@ -21,8 +21,8 @@ spec:
         - name: FLYWAY_PASSWORD
           value: dbpassword
         command: ["flyway","migrate"]
-    volumes:
-    - name: sql-scripts
-      configMap:
-        name: flyway-sql-scripts
-    restartPolicy: Never
+      volumes:
+      - name: sql-scripts
+        configMap:
+          name: flyway-sql-scripts
+      restartPolicy: Never
