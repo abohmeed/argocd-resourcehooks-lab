@@ -15,7 +15,7 @@ spec:
           mountPath: /flyway/sql
         env:
         - name: FLYWAY_URL
-          value: jsbc:mysql://mysql-sample.default.svc.cluster.local/my_database
+          value: jdbc:mysql://mysql-sample.default.svc.cluster.local/my_database
         - name: FLYWAY_USER
           value: dbuser
         - name: FLYWAY_PASSWORD
