@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 18.19.2
+    chart: redis
+    helm:
+      parameters:
+        - name: global.redis.password
+          value: "mypassword"
+        - name: architecture
+          value: "standalone"
+      # Ensure you have enabled OCI support and configured it to pull from Docker Hub if needed.
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+
