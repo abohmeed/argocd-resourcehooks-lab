@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-redis-app
-        image: afakharany/python-redis:1.1
+        image: afakharany/python-redis:1.2
         ports:
         - containerPort: 8000
         env:

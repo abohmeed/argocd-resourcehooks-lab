@@ -13,11 +13,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    try:
-        visits = redis.incr('counter')  # Increment the counter in Redis
-    except RedisError:
-        visits = "<i>cannot connect to Redis, counter disabled</i>"
-
+    visits = redis.incr('counter')  # Increment the counter in Redis
     html = "<h3>Hello from Flask!</h3>" \
            "<b>Visits:</b> {visits}"
     return html.format(visits=visits)
