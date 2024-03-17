@@ -4,9 +4,10 @@ from redis import Redis, RedisError
 
 # Retrieve Redis password from environment variable
 redis_password = os.environ.get('REDIS_PASSWORD')
+redis_host = os.environ.get('REDIS_HOST')
 
 # Connect to Redis with authentication
-redis = Redis(host='localhost', port=6379, db=0, decode_responses=True, password=redis_password)
+redis = Redis(host=redis_host, port=6379, db=0, decode_responses=True, password=redis_password)
 
 app = Flask(__name__)
 

@@ -22,3 +22,5 @@ spec:
         env:
         - name: REDIS_PASSWORD
           value: mypassword
+        - name: REDIS_HOST
+          value: redis-master
