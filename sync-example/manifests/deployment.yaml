@@ -19,4 +19,6 @@ spec:
         image: afakharany/python-redis:1.1
         ports:
         - containerPort: 8000
-
+        env:
+        - name: REDIS_PASSWORD
+          value: mypassword
