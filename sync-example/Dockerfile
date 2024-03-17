@@ -14,5 +14,5 @@ RUN pip install --trusted-host pypi.python.org Flask redis
 EXPOSE 8000
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["python", "redis-app.py"]
 
