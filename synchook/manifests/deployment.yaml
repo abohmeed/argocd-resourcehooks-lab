@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: redis-app
-        image: afakharany/redis-app:1.0
+        image: afakharany/redis-app:2.0
         ports:
         - containerPort: 8000
         env:
