@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-app
+  labels:
+    app: redis-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis-app
+  template:
+    metadata:
+      labels:
+        app: redis-app
+    spec:
+      containers:
+      - name: redis-app
+        image: afakharany/redis-app:1.0
+        ports:
+        - containerPort: 8000
+        env:
+        - name: REDIS_PASSWORD
+          value: mypassword
+        - name: REDIS_HOST
+          value: redis-master

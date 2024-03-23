@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clear-redis-cache
+  annotations:
+    argocd.argoproj.io/hook: Sync
+spec:
+  template:
+    metadata:
+      name: clear-redis-cache
+    spec:
+      containers:
+      - name: redis-client
+        image: redis:latest
+        command: ["redis-cli","-h","redis-master","-a","mypassword","flushall"]
+      restartPolicy: Never

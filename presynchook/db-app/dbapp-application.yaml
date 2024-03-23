@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/abohmeed/argocd-resourcehooks-lab.git'
     targetRevision: HEAD
-    path: 'db-app'
+    path: 'presync/db-app'
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
