@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: argocd-notification-
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  template:
+    spec:
+      containers:
+      - name: notify-slack
+        image: curlimages/curl:latest
+        command:
+        - sh
+        - -c
+        args:
+        - |
+          curl -X POST -H 'Content-type: application/json' --data '
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "App sync successful :ghost:"
+                }
+              }
+            ]
+          }
+          ' $WEBHOOK_URL
+        env:
+        - name: WEBHOOK_URL
+          valueFrom:
+            secretKeyRef:
+              name: slack-webhook-url
+              key: webhook-url
+      restartPolicy: Never
