@@ -15,7 +15,7 @@ spec:
         auth:
           username: dbuser
           password: dbpassword
-          name: mydatabase
+          name: my_database
           createDatabase: true
   destination:
     server: "https://kubernetes.default.svc"
