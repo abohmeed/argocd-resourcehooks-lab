@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql-backup-job
+  annotations:
+    argocd.argoproj.io/hook: PostDelete
+spec:
+  template:
+    spec:
+      containers:
+      - name: mysql-backup
+        image: mysql:8.3.0
+        command: ["/bin/sh","-c"]
+        args:
+        - |
+          mysqldump -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} > /backup/final_backup.sql && \
+          echo "Backup successful, deleteing database..." && \
+          mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -e "DROP DATABASE ${MYSQL_DATABASE};"
+        env:
+        - name: MYSQL_HOST
+          value: "mysql-sample"
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-sample
+              key: mysql-root-password
+        - name: MYSQL_DATABASE
+          value: "my_database"
+        volumeMounts:
+        - name: backup-volume
+          mountPath: /backup
+      restartPolicy: OnFailure
+      volumes:
+      - name: backup-volume
+        path: /home/ahmed/backup
+        type: DirectoryOrCreate
+  backoffLimit: 4
