@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flyway-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  template:
+    spec:
+      containers:
+      - name: flyway
+        image: flyway/flyway
+        volumeMounts:
+        - name: sql-scripts
+          mountPath: /flyway/sql
+        env:
+        - name: FLYWAY_URL
+          value: jdbc:mysql://mysql-sample.default.svc.cluster.local/my_database
+        - name: FLYWAY_USER
+          value: dbuser
+        - name: FLYWAY_PASSWORD
+          value: dbpassword
+        command: ["flyway","migrate"]
+      volumes:
+      - name: sql-scripts
+        configMap:
+          name: flyway-sql-scripts
+      restartPolicy: Never
